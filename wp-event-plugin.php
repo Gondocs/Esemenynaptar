@@ -100,20 +100,21 @@ function wp_event_plugin_render_meta_box( $post ) {
     $image_link = get_post_meta( $post->ID, '_event_image_link', true );
     $short_description = get_post_meta( $post->ID, '_event_short_description', true );
 
+    echo '<div class="event-meta-box">';
     echo '<label for="event_location">' . __( 'Lokáció', 'text_domain' ) . '</label>';
-    echo '<input type="text" id="event_location" name="event_location" value="' . esc_attr( $location ) . '" size="25" /><br>';
+    echo '<input type="text" id="event_location" name="event_location" value="' . esc_attr( $location ) . '" size="25" />';
 
     echo '<label for="event_date">' . __( 'Dátum', 'text_domain' ) . '</label>';
-    echo '<input type="date" id="event_date" name="event_date" value="' . esc_attr( $date ) . '" size="25" /><br>';
+    echo '<input type="date" id="event_date" name="event_date" value="' . esc_attr( $date ) . '" size="25" />';
 
     echo '<label for="event_time">' . __( 'Időpont', 'text_domain' ) . '</label>';
-    echo '<input type="time" id="event_time" name="event_time" value="' . esc_attr( $time ) . '" size="25" /><br>';
+    echo '<input type="time" id="event_time" name="event_time" value="' . esc_attr( $time ) . '" size="25" />';
 
     echo '<label for="event_capacity_min">' . __( 'Minimum Hány fő', 'text_domain' ) . '</label>';
-    echo '<input type="number" id="event_capacity_min" name="event_capacity_min" value="' . esc_attr( $capacity_min ) . '" size="25" required /><br>';
+    echo '<input type="number" id="event_capacity_min" name="event_capacity_min" value="' . esc_attr( $capacity_min ) . '" size="25" required />';
 
     echo '<label for="event_capacity_max">' . __( 'Maximum Hány fő', 'text_domain' ) . '</label>';
-    echo '<input type="number" id="event_capacity_max" name="event_capacity_max" value="' . esc_attr( $capacity_max ) . '" size="25" required /><br>';
+    echo '<input type="number" id="event_capacity_max" name="event_capacity_max" value="' . esc_attr( $capacity_max ) . '" size="25" required />';
 
     echo '<label for="event_recommended_for">' . __( 'Kinek ajánlott', 'text_domain' ) . '</label>';
     echo '<select id="event_recommended_for" name="event_recommended_for">';
@@ -122,16 +123,17 @@ function wp_event_plugin_render_meta_box( $post ) {
         $selected = ($recommended_for == $option) ? 'selected' : '';
         echo '<option value="' . esc_attr($option) . '" ' . $selected . '>' . esc_html($option) . '</option>';
     }
-    echo '</select><br>';
+    echo '</select>';
 
     echo '<label for="event_duration">' . __( 'Időtartam', 'text_domain' ) . '</label>';
-    echo '<input type="text" id="event_duration" name="event_duration" value="' . esc_attr( $duration ) . '" size="25" /><br>';
+    echo '<input type="text" id="event_duration" name="event_duration" value="' . esc_attr( $duration ) . '" size="25" />';
 
     echo '<label for="event_image_link">' . __( 'Kép Link', 'text_domain' ) . '</label>';
-    echo '<input type="text" id="event_image_link" name="event_image_link" value="' . esc_attr( $image_link ) . '" size="25" /><br>';
+    echo '<input type="text" id="event_image_link" name="event_image_link" value="' . esc_attr( $image_link ) . '" size="25" />';
 
     echo '<label for="event_short_description">' . __( 'Rövid Leírás', 'text_domain' ) . '</label>';
-    echo '<textarea id="event_short_description" name="event_short_description" rows="4" cols="50">' . esc_textarea( $short_description ) . '</textarea><br>';
+    echo '<textarea id="event_short_description" name="event_short_description" rows="4" cols="50">' . esc_textarea( $short_description ) . '</textarea>';
+    echo '</div>';
 }
 
 function wp_event_plugin_save_meta_box_data( $post_id ) {
@@ -345,6 +347,8 @@ function wp_event_plugin_additional_styles() {
         }
         .event-card p {
             margin: 5px 0;
+            display: flex;
+            align-items: center;
         }
         .event-image {
             width: 100%;
@@ -395,16 +399,30 @@ function wp_event_plugin_additional_styles() {
             margin-right: 5px;
         }
         .icon-location {
-            background-image: url('path/to/location-icon.png');
+            background-image: url('https://dev.kts.hu/wp-content/uploads/2025/02/free-location-icon-2952-thumb.png');
         }
         .icon-duration {
-            background-image: url('path/to/clock-icon.png');
+            background-image: url('https://dev.kts.hu/wp-content/uploads/2025/02/Video_player_time_duration-512.webp');
         }
         .icon-capacity {
-            background-image: url('path/to/users-icon.png');
+            background-image: url('https://dev.kts.hu/wp-content/uploads/2025/02/png-clipart-computer-icons-user-person-others-people-human.png');
         }
         .icon-recommended {
-            background-image: url('path/to/user-icon.png');
+            background-image: url('https://dev.kts.hu/wp-content/uploads/2025/02/pngtree-suggestions-line-icon-vector-png-image_6692157.png');
+        }
+        .event-meta-box label {
+            display: block;
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+        .event-meta-box input,
+        .event-meta-box select,
+        .event-meta-box textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
         }
     </style>
     <?php
