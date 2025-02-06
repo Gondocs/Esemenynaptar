@@ -256,6 +256,7 @@ function wp_event_plugin_display_events( $atts ) {
         while ( $query->have_posts() ) {
             $query->the_post();
             $location = get_post_meta( get_the_ID(), '_event_location', true );
+            $date = get_post_meta( get_the_ID(), '_event_date', true );
             $duration = get_post_meta( get_the_ID(), '_event_duration', true );
             $capacity_min = get_post_meta( get_the_ID(), '_event_capacity_min', true );
             $capacity_max = get_post_meta( get_the_ID(), '_event_capacity_max', true );
@@ -271,6 +272,7 @@ function wp_event_plugin_display_events( $atts ) {
             $output .= '<h2><a href="' . get_permalink() . '">' . get_the_title() . '</a></h2>';
             $output .= '<p class="event-short-description">' . esc_html( $short_description ) . '</p>';
             $output .= '<p><i class="icon icon-location"></i> ' . esc_html( $location ) . '</p>';
+            $output .= '<p><i class="icon icon-date"></i> ' . esc_html( $date ) . '</p>';
             $output .= '<p><i class="icon icon-duration"></i> ' . esc_html( $duration ) . '</p>';
             $output .= '<p><i class="icon icon-capacity"></i> ' . esc_html( $capacity_min ) . ' - ' . esc_html( $capacity_max ) . '</p>';
             $output .= '<p><i class="icon icon-recommended"></i> ' . esc_html( $recommended_for ) . '</p>';
@@ -300,6 +302,7 @@ function wp_event_plugin_additional_styles() {
     <style>
         .event-filter-form {
             margin-bottom: 20px;
+            display: block;
         }
         .event-filter-form label {
             display: block;
@@ -320,6 +323,7 @@ function wp_event_plugin_additional_styles() {
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            width: 100%;
         }
         .event-filter-form button:hover {
             background: #005177;
@@ -331,55 +335,62 @@ function wp_event_plugin_additional_styles() {
         }
         .event-card {
             display: flex;
-            align-items: stretch;
-            border-radius: 5px;
-            overflow: hidden;
-            background-color: #ffffff;
             flex-direction: column;
             align-items: flex-start;
             width: calc(33.333% - 20px);
             box-sizing: border-box;
             border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            background-color: #ffffff;
+            height: 100%;
+        }
+        @media (max-width: 1024px) {
+            .event-card {
+                width: calc(50% - 20px);
+            }
+        }
+        @media (max-width: 768px) {
+            .event-card {
+                width: 100%;
+            }
         }
         .event-card h2 {
             margin-top: 0;
             color: #0073aa;
         }
         .event-card p {
-            margin: 5px 0;
             display: flex;
             align-items: center;
         }
         .event-image {
             width: 100%;
-            height: 240px;
             overflow: hidden;
         }
         .event-details {
             width: 100%;
-            padding-top: 1.5em;
-            padding-right: 15px;
-            padding-left: 15px;
+            padding: 1.5em 15px;
             background-color: #ffffff;
-            position: relative;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
         .event-details-button {
-            display: inline-block;
             margin-top: 10px;
+            display: inline-block;
             padding: 10px 15px;
             background: #0073aa;
-            color: #fff;
+            color: #ffffff;
             text-decoration: none;
             border-radius: 4px;
-            margin-bottom: 10px;
+            text-align: center;
+            width: 100%;
         }
         .event-details-button:hover {
             background: #005177;
         }
-        .event-card a {
-            color: #0073aa;
-            text-decoration: none;
-        }
+
         .event-card a:hover {
             text-decoration: underline;
         }
@@ -409,6 +420,9 @@ function wp_event_plugin_additional_styles() {
         }
         .icon-recommended {
             background-image: url('https://dev.kts.hu/wp-content/uploads/2025/02/pngtree-suggestions-line-icon-vector-png-image_6692157.png');
+        }
+        .icon-date {
+            background-image: url('https://dev.kts.hu/wp-content/uploads/2025/02/calendar-icon.png');
         }
         .event-meta-box label {
             display: block;
